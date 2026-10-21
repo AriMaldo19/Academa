@@ -8,7 +8,7 @@ Se identificaron nueve code smells o debilidades técnicas.
 
 ---
 
-## Long Method
+## 1. Long Method
 
 **Ubicación:** `src/inicial/Gestor.java`, método `procesar()`, líneas 16 a 93.
 
@@ -24,7 +24,7 @@ El método `procesar()` realiza varias operaciones diferentes: valida los datos 
 
 ---
 
-## Long Parameter List
+## 2. Long Parameter List
 
 **Ubicación:** `src/inicial/Gestor.java`, método `procesar()`, línea 16.
 
@@ -46,7 +46,7 @@ Los datos relacionados con una solicitud son enviados como parámetros independi
 
 ---
 
-## Mysterious Name
+## 3. Mysterious Name
 
 **Ubicación:** `src/inicial/Gestor.java`, líneas 16 y 17 y diferentes sectores de la clase.
 
@@ -75,7 +75,7 @@ Estos nombres no permiten identificar directamente qué información representan
 
 ---
 
-## God Class
+## 4. God Class
 
 **Ubicación:** `src/inicial/Gestor.java`, clase `Gestor`.
 
@@ -104,7 +104,7 @@ La misma clase contiene lógica de negocio, persistencia y transformación de da
 
 ---
 
-## Duplicated Code
+## 5. Duplicated Code
 
 **Ubicación:** `src/inicial/Gestor.java`. Lecturas en las líneas 30, 98, 160, 195 y 225. Escrituras en las líneas 69, 147 y 186.
 
@@ -130,7 +130,7 @@ La operación de lectura del archivo se encuentra repetida en cinco métodos dif
 
 ---
 
-## Condicional largo
+## 6. Condicional largo
 
 **Ubicación:** `src/inicial/Gestor.java`, líneas 43 a 60 y 112 a 124.
 
@@ -202,7 +202,7 @@ Presenta un problema similar, las transiciones entre estados se resuelven median
 
 ---
 
-## Excepción escondida
+## 7. Excepción escondida
 
 **Ubicación:** `src/inicial/Gestor.java`, bloques `catch` de las líneas 31, 70, 99, 148, 161, 187, 196 y 226.
 
@@ -231,7 +231,7 @@ catch (Exception ex) {
 
 ---
 
-## Dead Code
+## 8. Dead Code
 
 **Ubicación:** `src/inicial/Gestor.java`, método `calcular()`, líneas 271 a 279.
 
@@ -266,7 +266,7 @@ El método realiza además una operación relacionada con los valores `"ALTA"` y
 
 ---
 
-## Regla en el lugar incorrecto
+## 9. Regla en el lugar incorrecto
 
 **Ubicación:** `src/inicial/Gestor.java`, método `armarReporte()`, líneas 234 a 243.
 
