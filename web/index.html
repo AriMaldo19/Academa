@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Academa — Sistema de Gestión de Solicitudes Académicas</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <aside class="menu">
+    <div class="marca">
+      <span class="marca-icono">A</span>
+      <span>Academa<br>Solicitudes académicas</span>
+    </div>
+    <nav>
+      <a class="activo" href="#inicio">Inicio</a>
+      <a href="#listado">Solicitudes</a>
+      <a href="#buscar">Reportes</a>
+    </nav>
+  </aside>
+
+  <div class="principal">
+    <header class="tope" id="inicio">
+      <div>
+        <h1>Inicio</h1>
+        <p>Desde aquí podés registrar solicitudes, asignar responsables, cambiar estados y consultar reportes.</p>
+      </div>
+      <div class="perfil">
+        <span class="perfil-icono">M</span>
+        <span>
+          <strong id="version">Cargando</strong>
+          <small>Misma pantalla en las dos versiones</small>
+        </span>
+      </div>
+    </header>
+
+    <section class="grilla">
+      <article class="tarjeta azul" id="registrar">
+        <header>
+          <span class="numero">1</span>
+          <div>
+            <h2>Registrar nueva solicitud</h2>
+            <p>La usa el estudiante. Completá el formulario para pedir una constancia, una equivalencia o una revisión.</p>
+          </div>
+        </header>
+        <form id="form-registrar">
+          <div class="linea">
+            <label>Estudiante *
+              <input name="nombre" required placeholder="Ana Pérez">
+            </label>
+            <p class="pista">Nombre de la persona que inicia la solicitud.</p>
+          </div>
+          <div class="linea">
+            <label>Legajo del estudiante *
+              <input name="legajo" required placeholder="1001">
+            </label>
+            <p class="pista">Número de legajo. No es el número de la solicitud.</p>
+          </div>
+          <div class="linea">
+            <label>Tipo de solicitud *
+              <select name="tipo">
+                <option value="Constancia">Constancia</option>
+                <option value="Equivalencia">Equivalencia</option>
+                <option value="Revision">Revisión</option>
+              </select>
+            </label>
+            <p class="pista">Elegí el trámite que necesitás.</p>
+          </div>
+          <div class="linea">
+            <label>Prioridad *
+              <select name="prioridad">
+                <option value="Alta">Alta</option>
+                <option value="Media">Media</option>
+                <option value="Baja">Baja</option>
+              </select>
+            </label>
+            <p class="pista">Alta es urgente. Media es normal. Baja puede esperar.</p>
+          </div>
+          <div class="linea">
+            <label>Descripción *
+              <input name="descripcion" required placeholder="Necesito una constancia para presentar en el trabajo">
+            </label>
+            <p class="pista">Explicá brevemente el motivo de la solicitud.</p>
+          </div>
+          <div class="linea accion">
+            <button type="submit">Enviar solicitud</button>
+            <p class="pista ok">Al enviarla queda en estado Nueva, sin responsable, y recibe un número.</p>
+          </div>
+        </form>
+      </article>
+
+      <article class="tarjeta violeta" id="responsable">
+        <header>
+          <span class="numero">2</span>
+          <div>
+            <h2>Asignar responsable</h2>
+            <p>La usa el personal de la mesa. Indica qué área o persona se hace cargo del trámite.</p>
+          </div>
+        </header>
+        <form id="form-responsable">
+          <div class="linea">
+            <label>Nº de solicitud *
+              <input name="id" required placeholder="1">
+            </label>
+            <p class="pista">Es el número de la columna ID, en la tabla de abajo.</p>
+          </div>
+          <div class="linea">
+            <label>Área *
+              <select name="area">
+                <option>Área Alumnos</option>
+                <option>Área Académica</option>
+                <option>Mesa de entrada</option>
+              </select>
+            </label>
+            <p class="pista">Elegí el área que va a tomar el trámite.</p>
+          </div>
+          <div class="linea">
+            <label>Persona responsable
+              <input name="persona" placeholder="María García">
+            </label>
+            <p class="pista">Opcional. Si la completás, queda junto con el área.</p>
+          </div>
+          <div class="linea accion">
+            <button type="submit">Asignar responsable</button>
+            <p class="pista">Se guarda el responsable. El estado de la solicitud no cambia en este paso.</p>
+          </div>
+        </form>
+      </article>
+
+      <article class="tarjeta verde" id="estado">
+        <header>
+          <span class="numero">3</span>
+          <div>
+            <h2>Cambiar estado de una solicitud</h2>
+            <p>La usa quien lleva el trámite. Nueva pasa a En curso. En curso pasa a Resuelta o a Rechazada.</p>
+          </div>
+        </header>
+        <form id="form-estado">
+          <div class="linea">
+            <label>Nº de solicitud *
+              <input name="id" required placeholder="1">
+            </label>
+            <p class="pista">Ingresá el número de la solicitud que se ve en la tabla.</p>
+          </div>
+          <div class="linea">
+            <label>Nuevo estado *
+              <select name="estado">
+                <option>En curso</option>
+                <option>Resuelta</option>
+                <option>Rechazada</option>
+              </select>
+            </label>
+            <p class="pista">Elegí el estado siguiente. No se puede volver para atrás.</p>
+          </div>
+          <div class="linea accion">
+            <button type="submit">Actualizar estado</button>
+            <p class="pista ok">Si la transición está permitida, se guarda. Si no, el sistema avisa.</p>
+          </div>
+        </form>
+      </article>
+
+      <article class="tarjeta rojo" id="buscar">
+        <header>
+          <span class="numero">4</span>
+          <div>
+            <h2>Buscar solicitudes y ver reportes</h2>
+            <p>Sirve para filtrar el listado o para ver el reporte completo, con la etiqueta de cada tipo.</p>
+          </div>
+        </header>
+        <form id="form-buscar">
+          <div class="filtros">
+            <label>Tipo
+              <select name="tipo">
+                <option value="">(cualquiera)</option>
+                <option value="Constancia">Constancia</option>
+                <option value="Equivalencia">Equivalencia</option>
+                <option value="Revision">Revisión</option>
+              </select>
+            </label>
+            <label>Prioridad
+              <select name="prioridad">
+                <option value="">(cualquiera)</option>
+                <option value="Alta">Alta</option>
+                <option value="Media">Media</option>
+                <option value="Baja">Baja</option>
+              </select>
+            </label>
+            <label>Estado
+              <select name="estado">
+                <option value="">(cualquiera)</option>
+                <option>Nueva</option>
+                <option>En curso</option>
+                <option>Resuelta</option>
+                <option>Rechazada</option>
+              </select>
+            </label>
+          </div>
+          <p class="pista suelta">(cualquiera) no filtra. Podés combinar tipo, prioridad y estado.</p>
+          <div class="linea accion">
+            <div class="botones">
+              <button type="submit">Buscar</button>
+              <button id="ver-reporte" type="button" class="secundario">Ver reporte</button>
+            </div>
+            <p class="pista">El reporte muestra todas las solicitudes, no solo el filtro.</p>
+          </div>
+        </form>
+      </article>
+    </section>
+
+    <section class="listado" id="listado">
+      <header>
+        <div>
+          <h2>Listado de solicitudes</h2>
+          <p>Acá se ven las solicitudes guardadas. El ID es el número que se usa para asignar y para cambiar el estado.</p>
+        </div>
+        <p id="mensaje">Todavía no hay resultados. Empezá por Registrar nueva solicitud.</p>
+      </header>
+      <div class="tabla-contenedor">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Estudiante</th>
+              <th>Legajo</th>
+              <th>Tipo de solicitud</th>
+              <th>Descripción</th>
+              <th>Prioridad</th>
+              <th>Estado</th>
+              <th>Responsable</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="filas">
+            <tr><td colspan="9" class="vacio">La lista aparece acá.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <pre id="reporte" class="reporte oculto"></pre>
+    </section>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
