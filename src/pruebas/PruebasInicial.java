@@ -1,3 +1,4 @@
+
 package pruebas;
 
 import java.io.IOException;
@@ -10,16 +11,29 @@ public class PruebasInicial {
 
     public static void main(String[] args) throws IOException {
 
+        System.out.println("=== INICIANDO PRUEBAS DE ACADEMA ===");
+        System.out.println();
+
+        probarRegistroValido();
+        System.out.println();
+
+        probarRegistroIncompleto();
+        System.out.println();
+
+        probarCambioEstado();
+        System.out.println();
+
+        System.out.println("=== TODAS LAS PRUEBAS SUPERADAS ===");
+    }
+
+    private static void probarRegistroValido() throws IOException {
+
         Path archivoTemporal = Files.createTempFile(
-                "academa-prueba-",
+                "academa-p01-",
                 ".txt"
         );
 
-        System.out.println("Archivo de prueba creado:");
-        System.out.println(archivoTemporal);
-
         try {
-
             Resultado resultado = Gestor.registrar(
                     "Estudiante Prueba",
                     "12345",
@@ -52,6 +66,20 @@ public class PruebasInicial {
 
             System.out.println("PRUEBA P01 SUPERADA: registro válido");
 
+        } finally {
+            Files.deleteIfExists(archivoTemporal);
+            System.out.println("Archivo temporal P01 eliminado.");
+        }
+    }
+
+    private static void probarRegistroIncompleto() throws IOException {
+
+        Path archivoTemporal = Files.createTempFile(
+                "academa-p02-",
+                ".txt"
+        );
+
+        try {
             Resultado resultadoInvalido = Gestor.registrar(
                     "",
                     "67890",
@@ -62,11 +90,15 @@ public class PruebasInicial {
             );
 
             if (resultadoInvalido.ok) {
-                throw new AssertionError("ERROR: no debería aceptar una solicitud sin nombre");
+                throw new AssertionError(
+                        "ERROR: no debería aceptar una solicitud sin nombre"
+                );
             }
 
             if (!"Faltan datos de la solicitud".equals(resultadoInvalido.mensaje)) {
-                throw new AssertionError("ERROR: mensaje de validación inesperado");
+                throw new AssertionError(
+                        "ERROR: mensaje de validación inesperado"
+                );
             }
 
             Resultado solicitudesGuardadas = Gestor.buscar(
@@ -76,37 +108,93 @@ public class PruebasInicial {
                     ""
             );
 
-            if (solicitudesGuardadas.datos.size() != 1) {
+            if (solicitudesGuardadas.datos.size() != 0) {
                 throw new AssertionError(
-                        "ERROR: la solicitud incompleta no debería haberse guardado"
+                        "ERROR: no debería haber solicitudes guardadas"
                 );
             }
 
             System.out.println("PRUEBA P02 SUPERADA: solicitud incompleta rechazada");
 
+        } finally {
+            Files.deleteIfExists(archivoTemporal);
+            System.out.println("Archivo temporal P02 eliminado.");
+        }
+    }
+
+    private static void probarCambioEstado() throws IOException {
+
+        Path archivoTemporal = Files.createTempFile(
+                "academa-p03-",
+                ".txt"
+        );
+
+        try {
+            // Preparar una solicitud para la prueba
+            Resultado registro = Gestor.registrar(
+                    "Estudiante Prueba",
+                    "12345",
+                    "Constancia",
+                    "Alta",
+                    "Solicitud de constancia",
+                    archivoTemporal.toString()
+            );
+
+            if (!registro.ok || registro.datos.size() != 1) {
+                throw new AssertionError(
+                        "ERROR: no se pudo preparar la solicitud para P03"
+                );
+            }
+
+            String id = registro.datos.get(0).get("id");
+
+            // Cambiar el estado de Nueva a En curso
             Resultado cambioEstado = Gestor.cambiarEstado(
-                    "1",
+                    id,
                     "En curso",
                     archivoTemporal.toString()
             );
 
             if (!cambioEstado.ok) {
-                throw new AssertionError("ERROR: el cambio de estado debería ser exitoso");
+                throw new AssertionError(
+                        "ERROR: el cambio de estado debería ser exitoso"
+                );
             }
 
             if (!"Estado actualizado".equals(cambioEstado.mensaje)) {
-                throw new AssertionError("ERROR: mensaje de cambio de estado inesperado");
+                throw new AssertionError(
+                        "ERROR: mensaje de cambio de estado inesperado"
+                );
             }
 
             if (!"En curso".equals(cambioEstado.datos.get(0).get("estado"))) {
-                throw new AssertionError("ERROR: el estado debería ser En curso");
+                throw new AssertionError(
+                        "ERROR: el estado debería ser En curso"
+                );
             }
 
-            System.out.println("PRUEBA P03 SUPERADA: cambio de estado Nueva a En curso");
+            // Verificar que el cambio haya quedado guardado
+            Resultado solicitudesGuardadas = Gestor.buscar(
+                    archivoTemporal.toString(),
+                    "",
+                    "",
+                    ""
+            );
+
+            if (solicitudesGuardadas.datos.size() != 1 ||
+                    !"En curso".equals(solicitudesGuardadas.datos.get(0).get("estado"))) {
+                throw new AssertionError(
+                        "ERROR: el cambio de estado no quedó guardado"
+                );
+            }
+
+            System.out.println(
+                    "PRUEBA P03 SUPERADA: cambio de estado Nueva a En curso"
+            );
 
         } finally {
             Files.deleteIfExists(archivoTemporal);
-            System.out.println("Archivo temporal eliminado.");
+            System.out.println("Archivo temporal P03 eliminado.");
         }
     }
 }
