@@ -61,3 +61,12 @@ La descripción no debe contener el carácter `|`, porque se utiliza como separa
 - CSS
 - Git y GitHub para el control de versiones y el trabajo colaborativo.
 - Windows Batch (`.bat`), para automatizar la ejecución y las pruebas del proyecto.
+
+---
+
+## 👥 Estudiantes  
+
+- **Maldonado Ariana, Comisión 10**  
+- **Carro Matias Manuel, Comisión 11**  
+- **Bohorquez Tello Tomas Esteban, Comisión 6**  
+- **Andrelo Luciano Aldo, Comisión 7**   
